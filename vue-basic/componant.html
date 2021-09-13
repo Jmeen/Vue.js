@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <title>Component</title>
+</head>
+
+<body>
+  <!-- vue 렌더링 영역 -->
+  <div id="app">
+    <global-header></global-header>
+    <local-component></local-component>
+    <local-component2></local-component2>
+  </div>
+
+  <script>
+    // 전역 컴포넌트 선언 : 인스턴스 내에서 어디든지 사용할수 있는 컴포넌트
+    Vue.component("global-header",
+      {
+        template: '<div><h1>{{title}}</h1></div>',
+        data: function () {
+          return {
+            title: "global header"
+          }
+        }
+      });
+
+    // 지역 컴포넌트 선언
+    let cmp1 = {
+      template: '<div><h2>Local componet</h2></div>'
+    }
+
+    // 새 인스턴스 생성
+    let app = new Vue({
+      el: '#app',
+      components: {
+        // 지역 컴포넌트 등록
+        "local-component": cmp1,
+        "local-component2": {
+          template: '<div><h2>local component 2</h2></div>'
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
