@@ -21,7 +21,18 @@
     <local-component2></local-component2>
   </div>
 
+  <div id="eventBusEx">
+    <h2>EventBus Receiver</h2>
+    <p>{{ message }}</p>
+  </div>
+
   <script>
+    // 부모 자식간 관계를 벗어난 데이터 통신을 위한 별도의 뷰 객체
+    let eventBus = new Vue();
+
+
+
+
     // 전역 컴포넌트 선언 : 인스턴스 내에서 어디든지 사용할수 있는 컴포넌트
     Vue.component("global-header",
       {
@@ -47,6 +58,8 @@
         sendMsg: function () {
           //  send-msg 이벤트롤 발생시킨다.
           this.$emit("send-msg", "Message from Child");
+          // eventBus에 이벤트를 발생
+          eventBus.$emit('triggerEventBus', "Message Form Other")
         }
       }
     }
@@ -73,6 +86,25 @@
         }
       }
     })
+
+    //  이벤트 버스 수신기
+    var eventBusEx = new Vue({
+      el: "#eventBusEx",
+      data: {
+        message: "Message를 대기중입니다."
+      },
+      created: function () {
+        //  eventBus가 발생하는 triggerEventBus 이벤트 처리기를 등록
+        var instance = this;
+        eventBus.$on("triggerEventBus", function (message) {
+          console.log("Event from EventBus:", message);
+          instance.message = message;
+        });
+      }
+    })
+
+
+
   </script>
 </body>
 
