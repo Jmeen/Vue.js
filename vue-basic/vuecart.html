@@ -7,7 +7,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- 개발버전, 도움되는 콘솔 경고를 포함. -->
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://kit.fontawesome.com/c1a564caec.js" crossorigin="anonymous"></script>
   <title>Vue Cart</title>
+  <style>
+    #app{
+      width: 400px;
+      border: 1px solid black;
+      border-radius: 20px 20px 0 0;
+      text-align: center;
+    }
+
+
+    #list{
+      padding: 5px 30px;
+      display: flex;
+      justify-content: space-between;
+    }
+    #line{
+      
+      width: 90%;
+      height: 1px;
+      background-color: black;
+    }
+    
+
+  </style>
 </head>
 
 <body>
@@ -47,13 +71,14 @@
       // props 받아오기
       props: ["shopping-items"],
       template:
-        `<div>
+        `<div id="buy">
           <h2> 살 물건들 </h2>
           <ul>
-            <li v-for="(item,index) in shoppingItems" 
+            <li id="list" v-for="(item,index) in shoppingItems" 
                 v-if=!item.buy>{{item.name}}
               <button @click="buyItem(item,index)">구매</button>
             </li>
+            <div id="line"></div>
           </ul>
       </div>`,
       methods: {
