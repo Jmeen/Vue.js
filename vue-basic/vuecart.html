@@ -21,7 +21,7 @@
       </ul>
     </div>
     <shop-list v-bind:shopping-items="items"></shop-list>
-    <cart-input></cart-input>
+    <cart-input v-on:add-item="addItem"></cart-input>
     <cart-footer></cart-footer>
   </div>
 
@@ -78,6 +78,11 @@
       methods: {
         addItem: function (newItem) {
           console.log("추가할 아이템 :",this.newItem)
+          // 부모로 전송시 이벤트 발생
+          if (this.newItem.trim().length > 0) {
+            this.$emit("add-item", this.newItem.trim());
+            this.newItem = "";
+          }
 
         }
       }
@@ -101,6 +106,16 @@
       components: {
         "shop-list": shopList,
         "cart-input": cartInput
+      },
+      methods: {
+        addItem: function (item) {
+          console.log("추가할 아이템", item);
+          // 배열에 아이템 추가
+          this.items.push({
+            name: item,
+            buy: false
+          })
+        }
       }
     })
   </script>
