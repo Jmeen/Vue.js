@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- 개발버전, 도움되는 콘솔 경고를 포함. -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- 컴포넌트 등록 -->
+  <div id="app">
+    <!-- 1-전역변수 "gobal-component" 사용 -->
+    <gobal-component></gobal-component>
+    <!-- 2_지역번수 "local-Component" 사용 -->
+    <local-component></local-component>
+    <!-- 3_데이터컴포넌트 -->
+    <data-component></data-component>
+  </div>
+  <!-- 4_데이터 전송하기 props -->
+  
+  <div div id="propEx">
+    <child-component v-bind:propsdata="message"></child-component>
+    <!-- 5_이벤트 v-on -->
+    <button v-on:click="clickevent">클릭이벤트</button>
+  </div>
+
+  <script>
+    // 1-1_전역컴포넌트 "gobal-component" 생성
+    Vue.component("gobal-component", {
+      template: '<h1>글로벌 컴포넌트입니다.</h1>'
+    })
+    // 2-1_지역컴포넌트 "local-component" 생성
+    let localComponent = {
+      template: '<h2>로컬 컴포넌트입니다.</h2>',
+    }
+    // 3_컴포넌트 데이터
+    Vue.component("data-component", {
+      template: ' <p>{{message}}</p>',
+      data: function () {
+        return {
+          message: "이것은 Data 예제입니다."
+        }
+      }
+    })
+
+    // 1-2_새 인스턴스 생성
+    let app = new Vue({
+      el: '#app',
+      components: {
+        // 2-2_지역변수를 인스턴스 내부 components옵션에 할당
+        "local-component": localComponent,
+      }
+    })
+
+    // 4_2_자식객체 생성
+    let childcmp = {
+      props: ['propsdata'],
+      template: "<p>전달받은 메세지는 {{propsdata}}</P>"
+    }
+
+    // 4_1_부모객체 생성
+    let propEx = new Vue({
+      el: '#propEx',
+      // template: "<h1>나는 부모객체입니다.</h1>",
+      data: function () {
+        return {
+          message: "이 구문은 자식에게 주는 문장입니다."
+        }
+      },
+      components: {
+        "child-component": childcmp
+      },
+      // 5_이벤트 함수 등록.
+      methods:{
+        clickevent:function(){
+          console.log("event!")
+        }
+      }
+    })
+
+
+  </script>
+</body>
+
+</html>
