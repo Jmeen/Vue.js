@@ -22,6 +22,8 @@
     </div>
     <shop-list v-bind:shopping-items="items"></shop-list>
     <cart-input v-on:add-item="addItem"></cart-input>
+    <input type="checkbox" v-model="showOption"> 산 물건보기
+    <bought-list v-bind:bought-items="items" v-show="showOption" v-on:remove-item="removeItem"></bought-list>
     <cart-footer></cart-footer>
   </div>
 
@@ -63,8 +65,35 @@
 
       }
     }
+    let boughtList = {
+      props: ["bought-items"],
+      template:
+        `
+      <div>
+        <h2> 산 물건들 </h2>
+          <ul>
+            <li v-for="(item,index) in boughtItems" v-if="item.buy">{{item.name}}
+            <button v-on:click=restoreItem(item)>구매취소</button>
+            <button @click=removeItem(item)>삭제</button>
+              </li>
+            </ul>
+      </div>
+      `,
+      methods: {
+        restoreItem: function (item) {
+          // alert(item.name+"을(를) 복구합니다.")
+          item.buy = false;
+        },
+        removeItem: function (item) {
+          // 부모로 삭제할 아이템 전달
+          // console.log("삭제할 item", item.name)
+          this.$emit("remove-item", item)
+        }
+      }
+    }
 
 
+    // cart input 컴포넌트
     var cartInput = {
       template:
         `
@@ -77,19 +106,15 @@
       },
       methods: {
         addItem: function (newItem) {
-          console.log("추가할 아이템 :",this.newItem)
+          console.log("추가할 아이템 :", this.newItem)
           // 부모로 전송시 이벤트 발생
           if (this.newItem.trim().length > 0) {
             this.$emit("add-item", this.newItem.trim());
             this.newItem = "";
           }
-
         }
       }
     }
-
-
-
 
     // vue 인스턴스
     var app = new Vue({
@@ -101,11 +126,13 @@
           { name: "쪽파", buy: true },
           { name: "고춧가루", buy: true }
         ],
-        showall: false
+        showall: false,
+        showOption: true
       },
       components: {
         "shop-list": shopList,
-        "cart-input": cartInput
+        "cart-input": cartInput,
+        "bought-list": boughtList
       },
       methods: {
         addItem: function (item) {
@@ -115,6 +142,13 @@
             name: item,
             buy: false
           })
+        },
+        removeItem: function (item) {
+          let index = this.items.indexOf(item);
+          if (index > -1) {
+            // 배열에서 요소 삭제
+            this.items.splice(index, 1);
+          }
         }
       }
     })
