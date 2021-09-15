@@ -8,12 +8,14 @@
         v-bind:key="index">{{item.name}}</li>
       </ul>
     </div>
+    <shop-list v-bind:shopping-items="items"></shop-list>
 <cart-footer></cart-footer>
 </div>
 </template>
 <script>
 import cartheader from "./components/cartheader"
 import cartFooter from "./components/cartFooter"
+import shopList from "./components/shoplist"
 export default{
   data:()=>{
     return{
@@ -28,7 +30,8 @@ export default{
   }},
   components:{
     "cart-header":cartheader,
-    "cart-footer":cartFooter
+    "cart-footer":cartFooter,
+    "shop-list":shopList
   }
 }
 </script>
