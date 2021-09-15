@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- 개발버전, 도움되는 콘솔 경고를 포함. -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <h1>computed</h1>
+    <p>제품가격 : <input v-model.number="price"></p>
+    <p>배송비 : <input v-model.number="deliveryCost"></p>
+    <p>최종가격 : {{totalCost}}</p>
+
+    <h1>Watch</h1>
+    <fieldset>
+        <legend>회원가입</legend>
+        <p>
+          <label for="userid">아이디</label>
+          <input v-model.trim="userid">
+          <span >{{useridMessage}}</span>
+        </p>
+    </fieldset>
+  </div>
+  <script>
+    new Vue({
+      el: "#app",
+      data: {
+        price: 0,
+        deliveryCost: 0,
+        // watch예제
+        userid : "",
+        useridMessage: "아이디를 입력해 주세요"
+        
+      },
+      watch:{
+        userid:function(data){
+          if(data.length === 0){
+            this.useridMessage = "아이디를 입력해 주세요"
+          } else if(data.length<=4){
+            this.useridMessage = "id는 4글자 이상이어야 합니다."
+          } else{
+            this.useridMessage = "유효한 아이디 입니다."
+          }
+        }
+      },
+      computed:{
+        totalCost : function(){
+          return this.price + this.deliveryCost;
+        }
+      }
+    })
+  </script>
+
+
+</body>
+
+</html>
