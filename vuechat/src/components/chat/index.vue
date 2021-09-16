@@ -11,7 +11,9 @@
   <div class="messages">
     <ul>
       <li v-for="(message,index) in messages" v-bind:key="index">
-        <div class="message">{{message}}</div>
+        <div class="message">{{message.body}}</div>
+        <div class="date">{{message.date}}</div>
+        <div class="name">{{message.user.name}}</div>
       </li>
     </ul>
 
@@ -25,10 +27,11 @@
 
 <script>
 import {mapGetters, mapActions} from 'vuex';
-import {SET_MESSAGES,GET_CHANNELS} from "../../store/mutation-types"
+import {GET_CHANNELS} from "../../store/mutation-types"
 export default {
   mounted(){
     this.GET_CHANNELS()
+    this.GET_MESSAGES(this.$route.params.cname)
   },
   data: () => {
     return {
@@ -45,12 +48,15 @@ export default {
     },
   methods:{
     ...mapActions([
-      SET_MESSAGES,
-      GET_CHANNELS
+      // SET_MESSAGES,
+      GET_CHANNELS,
+      "GET_MESSAGES",
+      "POST_MESSAGES"
     ]),
     send_message(){
-      this.SET_MESSAGES(this.message)
+      // this.SET_MESSAGES(this.message)
       // this.messages.push(this.message);
+      this.POST_MESSAGES({"cname":this.$route.params.cname, "message":this.message})
       this.message="";
     }
 
