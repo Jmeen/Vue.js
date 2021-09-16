@@ -9,13 +9,7 @@
   </div>
   <div class="channel-name">{{$route.params.cname}} </div>
   <div class="messages">
-    <ul>
-      <li v-for="(message,index) in messages" v-bind:key="index">
-        <div class="message">{{message.body}}</div>
-        <div class="date">{{message.date}}</div>
-        <div class="name">{{message.user.name}}</div>
-      </li>
-    </ul>
+   <message-list v-bind:messages='messages'></message-list>
 
   </div>
   <div class="form">
@@ -28,16 +22,19 @@
 <script>
 import {mapGetters, mapActions} from 'vuex';
 import {GET_CHANNELS} from "../../store/mutation-types"
+import MessageList from "../messagelist"
 export default {
   mounted(){
     this.GET_CHANNELS()
     this.GET_MESSAGES(this.$route.params.cname)
   },
+    beforeRouteUpdate(to, from, next) {
+    this.GET_MESSAGES(to.params.cname)
+    next()},
   data: () => {
     return {
       // channels:["general", "random"],
       message:"",
-
     }
   },
    computed: {
@@ -61,6 +58,9 @@ export default {
     }
 
   },
+  components:{
+    "message-list" : MessageList
+  }
 }
 </script>
 

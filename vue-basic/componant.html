@@ -16,7 +16,7 @@
     <h2>{{ content }}</h2>
     <!-- 부모 -> 자식 데이터 내려보내기 : props를 이용 -->
     <!-- 이벤트 연결: v-on:이벤트명 -->
-    <local-component v-bind:propsdata="message" v-on:send-msg="rcvMsg"></local-component>
+    <local-component v-bind:propsdata="messages" v-on:send-msg="rcvMsg"></local-component>
 
     <local-component2></local-component2>
   </div>
