@@ -7,6 +7,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <title>Hello, Vue.JS</title>
+    <style>
+        #list {
+            width: 400px;
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        #list td,
+        th {
+            border: 1px solid black;
+            text-align: center;
+        }
+
+        #list thead tr {
+            background-color: purple;
+            color: yellow;
+        }
+    </style>
 </head>
 
 <body>
@@ -19,7 +37,7 @@
         <br />
         입력된 이름 : <h3 v-html="name"></h3>
     </div>
-
+    <hr>
     <div id="simple1">
         <div>좋아하는 과일을 모두 골라주세요</div>
         <input type="checkbox" value="사과" v-model="fruits">사과,
@@ -31,7 +49,7 @@
     <div id="simple2">
         선택한 과일들 : <span v-html="fruits"></span>
     </div>
-
+    <hr>
 
     <div id="account">
         <span>예금액</span>
@@ -41,16 +59,94 @@
         <img src="error.png" title="마이너스는 허용하지 않습니다."
             style="width: 15px; height: 15px; vertical-align: middle; display: none;" />
         <br>
-        회원님의 등급 : 
+        회원님의 등급 :
         <span v-if="amount > 1000000">Gold</span>
         <span v-else-if="amount >= 500000">silver</span>
         <span v-else-if="amount >= 200000">bronze</span>
         <span v-else>basic</span>
+    </div>
+    <hr>
+    <table id="list">
+        <thead>
+            <tr>
+                <td>번호</td>
+                <td>이름</td>
+                <td>전화번호</td>
+                <td>주소</td>
+            </tr>
+        </thead>
+        <tbody id="contact">
+            <template v-for="(contact,index) in contacts">
+                <tr :key="contact.no">
+                    <td>{{contact.no}}</td>
+                    <td>{{contact.name}}</td>
+                    <td>{{contact.tel}}</td>
+                    <td>{{contact.add}}</td>
+                </tr>
+                <tr class="divider" v-if="index%2===1">
+                    <td colspan="4"></td>
+                </tr>
 
+            </template>
+        </tbody>
+    </table>
+    <hr>
+
+
+
+
+
+    <div class="regions">
+        <select id="regions">
+            <option disabled selected>지역을선택하세요</option>
+            <option v-for="(val,key,index) in regions" v-bind:value="key">{{index+1}}:{{val}}</option>
+
+        </select>
+    </div>
+    <hr>
+
+    <div id="vpre">
+        <h2 v-pre>{{message}}</h2>
     </div>
 
-
     <script type="text/javascript">
+
+        let vpre = new Vue({
+            el:"#vpre",
+            data:{
+                message:"hello"
+            }
+        })
+
+        let regions = {
+            "A": "Asia",
+            "B": "America",
+            "C": "Europe",
+            "D": "Africa",
+            "E": "Oseania"
+        }
+
+        var list2 = new Vue({
+            el: ".regions",
+            data: { regions: regions }
+        })
+        let data = {
+            "pageno": 1,
+            pagesize: 10,
+            totalcount: 5,
+            contacts: [
+                { no: 5, name: "설현", tel: "1234-5678", add: "서울" },
+                { no: 4, name: "혜리", tel: "1234-5678", add: "서울" },
+                { no: 3, name: "하니", tel: "1234-5678", add: "대전" },
+                { no: 2, name: "성소", tel: "1234-5678", add: "서울" },
+                { no: 1, name: "쯔위", tel: "1234-5678", add: "서울" }
+            ]
+        }
+        let contact = new Vue({
+            el: "#list",
+            data: data
+        })
+
         let amout = new Vue({
             el: "#account",
             data: { amount: 0 }
