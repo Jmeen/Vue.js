@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,23 +8,79 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <title>Hello, Vue.JS</title>
 </head>
+
 <body>
     <div id="simple">
-        <h2 v-text="message"></h2>
+        <!-- <h2 v-text="message"></h2>
         <h2 v-html="message"></h2>
         <h2>{{message}}</h2>
+        <input id="a" v-bind:value=message> -->
+        <input id="b" v-model="name" placeholder="이름을 입력하세요">
+        <br />
+        입력된 이름 : <h3 v-html="name"></h3>
     </div>
 
-    
-    <script type="text/javascript">
-    let model ={
-        message : "첫번째 vue.js 앱입니다."
-    }
+    <div id="simple1">
+        <div>좋아하는 과일을 모두 골라주세요</div>
+        <input type="checkbox" value="사과" v-model="fruits">사과,
+        <input type="checkbox" value="키위" v-model="fruits">키위,
+        <input type="checkbox" value="포도" v-model="fruits">포도,
+        <input type="checkbox" value="수박" v-model="fruits">수박,
+        <input type="checkbox" value="참외" v-model="fruits">참외,
+    </div>
+    <div id="simple2">
+        선택한 과일들 : <span v-html="fruits"></span>
+    </div>
 
-    let simple = new Vue({
-        el:'#simple',
-        data:model
-    })
+
+    <div id="account">
+        <span>예금액</span>
+        <input type="text" v-model="amount">
+        <!-- <img v-if="amount<0" src="error.png" title="마이너스는 허용하지 않습니다."
+            style="width: 15px; height: 15px; vertical-align: middle;" /> -->
+        <img src="error.png" title="마이너스는 허용하지 않습니다."
+            style="width: 15px; height: 15px; vertical-align: middle; display: none;" />
+        <br>
+        회원님의 등급 : 
+        <span v-if="amount > 1000000">Gold</span>
+        <span v-else-if="amount >= 500000">silver</span>
+        <span v-else-if="amount >= 200000">bronze</span>
+        <span v-else>basic</span>
+
+    </div>
+
+
+    <script type="text/javascript">
+        let amout = new Vue({
+            el: "#account",
+            data: { amount: 0 }
+        })
+
+
+
+        let model = {
+            message: "첫번째 vue.js 앱입니다."
+        }
+
+        let simple = new Vue({
+            el: '#simple',
+            data: { name: '' }
+
+        })
+
+        let model1 = {
+            fruits: []
+        };
+
+        let simple1 = new Vue({
+            el: "#simple1", data: model1
+        })
+
+        let simple2 = new Vue({
+            el: "#simple2", data: model1
+        })
+
     </script>
 </body>
+
 </html>
