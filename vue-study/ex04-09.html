@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/3.6.2/fetch.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.2.8/es6-promise.min.js"></script>
+    <title>Document</title>
+    <style>
+        #list {
+            width: 600px;
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        #list td,
+        th {
+            border: 1px solid black;
+            text-align: center;
+        }
+
+        #list thead {
+            color: yellow;
+            background-color: purple;
+        }
+
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="example" v-cloak>
+        <p>이름 : <input type="text" v-model="name" v-on:keyup.13="search" placeholder="두 글자 이상 입력하세요">
+        </p>
+        <table id="list">
+            <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>이름</th>
+                    <th>전화번호</th>
+                    <th>주소</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="contact in contactlist">
+                    <td>{{contact.no}}</td>
+                    <td>{{contact.name}}</td>
+                    <td>{{contact.tel}}</td>
+                    <td>{{contact.address}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div v-show="isProcessing === true">조회중</div>
+    </div>
+
+    <script type="text/javascript">
+
+        let vm = new Vue({
+            el: "#example",
+            data: {
+                name: "",
+                isProcessing: false,
+                contactlist: []
+            },
+
+            methods: {
+                search: function (e) {
+                    // if(e.keyCode===13){
+                    let val = e.target.value;
+                    if (val.length >= 2) {
+                        this.fetchContacts();
+                    }
+                    else {
+                        this.contactlist = [];
+                    }
+                },
+
+                fetchContacts: _.debounce(function () {
+                    this.contactlist = [];
+                    this.isProcessing = true;
+                    let url = "http://sample.bmaster.kro.kr/contacts_long/search/" + this.name;
+                    console.log(url)
+                    let vm = this;
+                    fetch(url).then(response => {
+                        return response.json();
+                    }).then(json => {
+                        vm.contactlist = json;
+                        vm.isProcessing = false
+                    }).catch(ex => {
+                        console.log("parsing failed", ex);
+                        vm.contactlist = [];
+                        vm.isProcessing = false
+                    })
+                }, 300)
+            }
+        })
+
+    </script>
+</body>
+
+</html>
