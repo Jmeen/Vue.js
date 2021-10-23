@@ -13,6 +13,7 @@
     <div id="example" class="container_layout1">
         <p><input type="text" v-model="amount" class="form-control"></p>
         <p>
+            <button id="spevent" v-on:click.once="specail">개설 축하이벤트</button>
             <button id="deposit" v-on:click="deposit">예금</button>
             <button id="withdraw" v-on:click="withdraw">출금</button>
         </p>
@@ -26,6 +27,10 @@
                 balance: 0
             },
             methods: {
+                specail:function(e){
+                    this.balance += 1000;
+                },
+
                 deposit: function (e) {
                     let amt = parseInt(this.amount)
                     if (amt <= 0) {
