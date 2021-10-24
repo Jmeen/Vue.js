@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>뷰 기초 익히기</title>
+</head>
+
+<body>
+    <div id="app">
+        <h2>베이직</h2>
+        {{person.name}} {{person.age}}<br>
+        {{nextYear("Hello")}}<br>
+        <hr>
+        <h2>바인드</h2>
+        <input :type="type" v-bind:value="inputData"><br>
+        <a :href="getLink()">울라울라울라쑝</a><br>
+        <hr>
+        <h2>이벤트</h2>
+        <button v-on:click="alert">click me!</button>
+        {{year}}
+        <button v-on:click="addYear()">add year</button>
+        <h4>.prevent하면 reload안함: 이벤트 수식</h4>
+        다양하니 이것저것 써봐라
+        <form v-on:submit.prevent="submit">
+            <input type="text">
+            <button type="submit">submit</button>
+        </form>
+        <hr>
+        <h2>양방향바인딩</h2>
+        <form v-on:submit.prevent="submit">
+            <!-- <input type="text" :value='text' v-on:keyup="updateText"><br> -->
+            <input type="text" v-model="text"><br>
+            {{text}}<br>
+            <button type="submit">submit</button>
+        </form>
+        <hr>
+        <h2>computed</h2>
+        <button @click="changeMessage">Chage Message</button>
+        {{ reverseMessage}}
+        {{ reverseMessage}}
+        {{ reverseMessage}}
+        <hr>
+        <h2>watch</h2>
+        {{message2}}<br>
+        {{updated}}<br>
+        <button @click="changeMessage2">Chage Message</button>
+    </div>
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                person: {
+                    name: "jaemin",
+                    age: 34,
+                },
+                year: 2021,
+                inputData: 'hello',
+                type: 'text',
+                link: "#",
+                text: 'text',
+                message : "헬로우우우우웅",
+                message2:"Jay",
+                updated: "no"
+            },
+            methods: {
+                // updateText(e) {
+                //     console.log(e);
+                //     this.text=e.target.value;
+                // },
+                submit() {
+                    alert("submit!!")
+                    console.log('prevent Default!')
+                },
+                addYear() {
+                    this.year++;
+                },
+                alert() {
+                    alert('hello!')
+                },
+                getLink() {
+                    return this.link + this.person.name
+                },
+                nextYear(greeting) {
+                    return greeting + '! ' + this.person.name + "는 내년에 " + (this.person.age + 1) + "살 입니다."
+                },
+                otherMethod: function () {
+                    this.nextYear();
+                },
+                changeMessage(){
+                   this.message = "우헤헤헹헹헹헤"
+                },
+                changeMessage2(){
+                    this.message2=" 끄아꿍"
+                }
+            },
+            computed:{
+                reverseMessage(){
+                   return this.message.split('').reverse().join('') 
+                }
+            },
+            watch:{
+                message2(newVal, oldVal){
+                    console.log(newVal,oldVal);
+                    this.updated = "yes"
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

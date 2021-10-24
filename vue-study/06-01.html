@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript" id="helloTemplate">
+        <div>Hello world!</div>
+    </script>
+
+    <script type="text/javascript">
+        Vue.component('hello-component', {
+            template: '#helloTemplate'
+        })
+    </script>
+
+    <script type="text/javascript">
+        Vue.component('option-component', {
+            template: '<option>Hello-option</option>'
+        })
+    </script>
+
+    <template id="listTemplate">
+        <li>{{myMessage}}</li>
+    </template>
+    <script type="text/javascript">
+    Vue.component('list-component',{
+        template:"#listTemplate",
+        props:['myMessage']
+    })
+    </script>
+
+
+    <div id="app">
+        <hello-component></hello-component>
+        <hello-component></hello-component>
+        <hello-component></hello-component>
+        <option-component></option-component>
+        <option-component></option-component>
+        <ul>
+            <list-component my-message="hi"></list-component>
+            <list-component my-message="니하오"></list-component>
+        </ul>
+     
+
+
+    </div>
+
+    <script type=text/javascript>
+    Vue.config.devtools=true;
+        let v = new Vue({
+            el:"#app"
+        })
+    </script>
+</body>
+
+</html>
