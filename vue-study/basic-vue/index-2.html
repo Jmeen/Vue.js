@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>뷰 기초 익히기</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <h2>v-if</h2>
+        <template v-if="show">
+            <div>1</div>
+            <div>2</div>
+            <div>3</div>
+        </template>
+        <div v-if="show">YES</div>
+        <div v-else-if="">Hi</div>
+        <div v-else>No</div>
+        <button @click="togglebtn">change</button>
+        <hr>
+        <div v-if="number===1">THis is 1st</div>
+        <div v-else-if="number===2">this is 2nd</div>
+        <div v-else>WWWWWW</div>
+        <button @click="increaseNum">++</button>
+
+        <hr>
+        <h2>v-show</h2>
+        <div v-show="show">YES</div>
+        <button @click="toggleShow">show</button>
+
+        <hr>
+        <h2>v-for</h2>
+        <div>
+            {{people[0].name}} , {{people[0].age}}
+        </div>
+
+        <div v-for="(person, index) in people" :key="person.id">
+            <span>{{person.name}}</span>
+            <span>{{person.age}}</span>
+            <span>{{index}}</span>
+            <hr>
+        </div>
+    </div>
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                show: false,
+                number: 1,
+                people: [
+                    {id:1, name: 'a', age: 20 },
+                    {id:2, name: 'b', age: 21 },
+                    {id:3, name: 'c', age: 22 },
+                    {id:4, name: 'd', age: 23 },
+                ]
+            },
+            methods: {
+                togglebtn() {
+                    this.show = !this.show;
+                },
+                increaseNum() {
+                    this.number++
+                },
+                toggleShow() {
+                    this.show = !this.show
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

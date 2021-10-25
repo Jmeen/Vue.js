@@ -7,11 +7,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <title>뷰 기초 익히기</title>
+    <style>
+        .red{
+            color: red;
+        }
+        .bold{
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <body>
     <div id="app">
-        <h2>베이직</h2>
+        <!-- <h2>베이직</h2>
         {{person.name}} {{person.age}}<br>
         {{nextYear("Hello")}}<br>
         <hr>
@@ -31,9 +39,9 @@
         </form>
         <hr>
         <h2>양방향바인딩</h2>
-        <form v-on:submit.prevent="submit">
+        <form v-on:submit.prevent="submit"> -->
             <!-- <input type="text" :value='text' v-on:keyup="updateText"><br> -->
-            <input type="text" v-model="text"><br>
+            <!-- <input type="text" v-model="text"><br>
             {{text}}<br>
             <button type="submit">submit</button>
         </form>
@@ -47,7 +55,11 @@
         <h2>watch</h2>
         {{message2}}<br>
         {{updated}}<br>
-        <button @click="changeMessage2">Chage Message</button>
+        <button @click="changeMessage2">Chage Message</button> -->
+        <h2>클래스 바인딩</h2>
+        <div :class="{red:isRed, bold:isBold}">hello</div>
+        <div :style="{color:blue, fontSize:size}">hello</div>
+        <button @click="changeRed">change</button>
     </div>
     <script>
         new Vue({
@@ -64,9 +76,18 @@
                 text: 'text',
                 message : "헬로우우우우웅",
                 message2:"Jay",
-                updated: "no"
+                updated: "no",
+                isRed:false,
+                isBold:false,
+                blue:'blue',
+                size:'32px'
+
             },
             methods: {
+                changeRed(){
+                    this.isRed=!this.isRed
+                    this.isBold=!this.isBold
+                },
                 // updateText(e) {
                 //     console.log(e);
                 //     this.text=e.target.value;
