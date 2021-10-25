@@ -1,27 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <title>뷰 기초 익히기</title>
-    
+
 </head>
+
 <body>
     <div id="app">
         <h2>v-if</h2>
+        {{name}}<br>
+        <button @click="changeText">update</button>
+    </div>
+    <div id="app-1">
+        {{name}}<br>
+        <button @click="changeText">update</button>
     </div>
     <script>
-    new Vue({
-        el:"#app",
-        data:{
-
-        },
-        methods:{
-
-        }
-    })
-</script>
+        const app = new Vue({
+            el: "#app",
+            data: {
+                name: "jamein"
+            },
+            methods: {
+                changeText() {
+                    app1.name = 'jaemin-update'
+                }
+            }
+        })
+        const app1 = new Vue({
+            el: "#app-1",
+            data: {
+                name: 'jaemin-1'
+            },
+            methods: {
+                changeText() {
+                    app.name = 'jaemin1-update'
+                }
+            }
+        })
+    </script>
 </body>
+
 </html>
