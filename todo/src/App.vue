@@ -9,7 +9,12 @@
     >
 
     <hr>
-    <ToDo v-for="todo in todos" :key="todo.id" :todo="todo"/>
+    <ToDo v-for="todo in todos" :key="todo.id" 
+    :todo="todo" 
+    @toggle-checkbox="toggleCheckBox"
+    @click-delete="clickDelete"
+    />
+
   </div>
 </template>
 
@@ -34,7 +39,22 @@ export default {
         text:e.target.value,
         checked:false
       })
-    }
-  }
+    },
+    toggleCheckBox({id,checked}){
+      console.log(id,checked)
+      const index = this.todos.findIndex(todo=>{
+        return todo.id === id;
+      })
+      this.todos[index].checked=checked;
+    },
+    clickDelete(id){
+    //   const index = this.todos.findIndex(todo=>{
+    //     return todo.id === id;
+    //   })
+    //   this.todos.splice(index,1)
+    // }
+    this.todos=this.todos.filter(todo=>todo.id!==id)
+
+    }}
 }
 </script>
