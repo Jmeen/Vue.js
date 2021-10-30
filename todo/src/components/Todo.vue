@@ -30,14 +30,15 @@ export default {
     },
     methods:{
         toggleCheckBox(e){
-            this.$emit('toggle-checkbox',{
+               this.$emit('toggle-checkbox',{
                 id: this.todo.id,
                 checked: e.target.checked
-            })
+        })
         },
         clickDelete(){
             this.$emit('click-delete',this.todo.id)
         }
     }
 }
+
 </script>
