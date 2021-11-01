@@ -16,7 +16,9 @@ class="btn btn-danger btn-sm"
 @click="clickDelete"
 >Delete
 </button>
-
+<div>
+    {{numberOfCompletedTodo}}
+</div>
     </div>
 </template>
 
@@ -28,6 +30,11 @@ export default {
             required:true
         }
     },
+    computed:{
+         numberOfCompletedTodo() {
+            return this.$store.getters.numberOfCompletedTodo;}
+    },
+
     methods:{
         toggleCheckBox(e){
 
