@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default { 
     name:'login',
     data() { 
@@ -33,6 +34,13 @@ export default {
            }
         },
         login(){
+          const data = {
+            id : this.id,
+            pw : this.pw
+          }
+          console.log(data);
+
+
           if (this.id == "test" && this.pw == "1234") {
              alert("로그인성공");
              console.log("로그인에 성공하셨습니다.");
@@ -40,8 +48,24 @@ export default {
             alert("로그인 실패");
             console.log("로그인에 실패하였습니다.");
         }
-        }
-        }
+
+        axios.post('http://localhost:8080/login',data)
+        .then(
+          res=>{
+            console.log(res)
+          }
+        ).catch(
+          err=>{
+            console.log(err)
+          }
+        )
+
+        },
+  
+        
+        },
+
+        
     }
 </script>
 
