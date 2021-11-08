@@ -5,12 +5,12 @@
 
         <v-flex xs12>
                 <v-alert
-                :value="iserror"
+                :value="isLoginError"
                  type="error">
                 아이디와 비밀번호를 확인해주세요
                 </v-alert>
                 <v-alert
-                :value="issuccess"
+                :value="isLogin"
                  type="success">
                 로그인이 완료되었습니다.
                 </v-alert>
@@ -31,7 +31,8 @@
                         label="패스워드를 입력하세요"
                     >
                     </v-text-field>
-                    <v-btn large block depressed @click="login()">Login</v-btn>
+                    <v-btn large block depressed 
+                    @click="login({email:email,password:password})">Login</v-btn>
                 </div>
 
             </v-card>
@@ -43,31 +44,27 @@
 </template>
 
 <script>
+import {mapState,mapActions} from "vuex"
 export default {
     data(){
         return{
             email:null,
             password:null,
-            allusers:[
-                {id:'test',name:"jaemin",email:"test@test.com",password:"1234"},
-                {id:'test2',name:"jaemin2",email:"test2@test.com",password:"1234"},
-            ],
-            iserror:false,
-            issuccess:false
         }
     },
     methods:{
-        login(){
+        ...mapActions(['login']),
+        // login(){
             // 전체 유저에서 해당 이메일로 유저 찾기
-            let selectedUser = null;
-            this.allusers.forEach(user=>{
-                if(user.email===this.email) selectedUser = user
-            })
-            selectedUser === null
-                ?(this.iserror=true, this.issuccess=false)
-                :selectedUser.password!==this.password
-                    ?(this.iserror=true, this.issuccess=false)
-                    :(this.issuccess=true, this.iserror=false)
+            // let selectedUser = null;
+            // this.allusers.forEach(user=>{
+            //     if(user.email===this.email) selectedUser = user
+            // })
+            // selectedUser === null
+            //     ?(this.iserror=true, this.issuccess=false)
+            //     :selectedUser.password!==this.password
+            //         ?(this.iserror=true, this.issuccess=false)
+            //         :(this.issuccess=true, this.iserror=false)
 
             // if(selectedUser === null) alert("이메일이 없습니다")
             // else{
@@ -82,7 +79,10 @@ export default {
             // }
             // 그 유저의 비밀번호 비교
 
-        }
+        // }
+    },
+    computed:{
+        ...mapState(["isLogin","isLoginError"])
     }
 }
 </script>
